@@ -1,10 +1,15 @@
 package timer
 
+type IsAlive interface {
+	Set(bool)
+	Get() bool
+}
+
 type TimerHandler interface {
 	OnTimeout()
 	Done() <-chan bool
 	Cancel()
-	IsAlive() bool
+	IsAlive() IsAlive
 }
 
 type Delay int64
