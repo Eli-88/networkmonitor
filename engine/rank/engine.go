@@ -22,6 +22,7 @@ type rankEngine struct {
 	timer           timer.Timer
 	done            chan bool
 	parser          parser.Decoder
+	isAlive         bool
 }
 
 func MakeRankEngine(maxEntryAllowed int, db db.KvDb, timer timer.Timer, parser parser.Decoder) Engine {
@@ -32,6 +33,7 @@ func MakeRankEngine(maxEntryAllowed int, db db.KvDb, timer timer.Timer, parser p
 		timer:           timer,
 		done:            make(chan bool, 1),
 		parser:          parser,
+		isAlive:         true,
 	}
 	retVal.results.Store(RankByTimeReponseCollection{})
 	return retVal
@@ -79,4 +81,9 @@ func (r *rankEngine) Done() <-chan bool {
 
 func (r *rankEngine) Cancel() {
 	r.done <- true
+	r.isAlive = false
+}
+
+func (r rankEngine) IsAlive() bool {
+	return r.isAlive
 }
