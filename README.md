@@ -8,7 +8,7 @@ It is a simple network monitoring system that monitors the registered ip address
 
 ## Usage
 
-Simply just run: `go run cmd/main.go` to start the http server, it will listen at local port `5050`
+Simply just run: `go run cmd/main.go config.json` to start the http server, it will listen at local port `5050`
 
 To register an ip address
 - get/post message to `http://localhost:5050/register`
