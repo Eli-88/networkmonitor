@@ -4,7 +4,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"networkmonitor/core/logger"
+	"networkmonitor/logger"
 )
 
 // interface compliance

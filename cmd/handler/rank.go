@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"networkmonitor/core/logger"
-	"networkmonitor/core/net/http"
-	"networkmonitor/core/parser"
-	"networkmonitor/rankengine"
+	rankengine "networkmonitor/engine/rank"
+	"networkmonitor/logger"
+	"networkmonitor/net/http"
+	"networkmonitor/parser"
 )
 
 var _ http.RequestHandler = &rankHandler{}

@@ -3,7 +3,7 @@ package rankengine
 import (
 	"container/heap"
 	"errors"
-	"networkmonitor/core/logger"
+	"networkmonitor/logger"
 	"sort"
 )
 

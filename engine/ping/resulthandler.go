@@ -1,10 +1,10 @@
 package pingengine
 
 import (
-	db "networkmonitor/core/db/kv"
-	"networkmonitor/core/logger"
-	"networkmonitor/core/net/pinger"
-	"networkmonitor/core/parser"
+	db "networkmonitor/db/kv"
+	"networkmonitor/logger"
+	"networkmonitor/net/pinger"
+	"networkmonitor/parser"
 )
 
 var _ PingResultHandler = &resultHandler{}

@@ -4,8 +4,8 @@ import (
 	"networkmonitor/cmd/app"
 	"networkmonitor/cmd/config"
 	"networkmonitor/cmd/handler"
-	db "networkmonitor/core/db/kv"
-	"networkmonitor/core/logger"
+	db "networkmonitor/db/kv"
+	"networkmonitor/logger"
 	"os"
 )
 

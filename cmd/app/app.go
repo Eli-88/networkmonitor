@@ -2,10 +2,10 @@ package app
 
 import (
 	"networkmonitor/cmd/handler"
-	"networkmonitor/core/logger"
-	"networkmonitor/core/net/http"
-	"networkmonitor/pingengine"
-	"networkmonitor/rankengine"
+	pingengine "networkmonitor/engine/ping"
+	rankengine "networkmonitor/engine/rank"
+	"networkmonitor/logger"
+	"networkmonitor/net/http"
 )
 
 type App interface {

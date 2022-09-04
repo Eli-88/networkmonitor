@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"networkmonitor/core/net/http"
-	"networkmonitor/core/parser"
-	"networkmonitor/pingengine"
-	"networkmonitor/rankengine"
+	pingengine "networkmonitor/engine/ping"
+	rankengine "networkmonitor/engine/rank"
+	"networkmonitor/net/http"
+	"networkmonitor/parser"
 )
 
 // interface compliance

@@ -2,12 +2,12 @@ package app
 
 import (
 	"networkmonitor/cmd/config"
-	db "networkmonitor/core/db/kv"
-	"networkmonitor/core/net/http"
-	"networkmonitor/core/parser"
-	"networkmonitor/core/timer"
-	"networkmonitor/pingengine"
-	"networkmonitor/rankengine"
+	db "networkmonitor/db/kv"
+	pingengine "networkmonitor/engine/ping"
+	rankengine "networkmonitor/engine/rank"
+	"networkmonitor/net/http"
+	"networkmonitor/parser"
+	"networkmonitor/timer"
 )
 
 var _ Builder = &builder{}

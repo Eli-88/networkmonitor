@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"networkmonitor/core/logger"
-	"networkmonitor/core/net/http"
-	"networkmonitor/core/parser"
-	"networkmonitor/pingengine"
+	pingengine "networkmonitor/engine/ping"
+	"networkmonitor/logger"
+	"networkmonitor/net/http"
+	"networkmonitor/parser"
 )
 
 var _ http.RequestHandler = registerHandler{}
