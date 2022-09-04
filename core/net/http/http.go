@@ -1,4 +1,4 @@
-package transport
+package http
 
 import (
 	"io"
@@ -8,14 +8,14 @@ import (
 )
 
 // interface compliance
-var _ HttpServer = &httpServer{}
+var _ Server = &httpServer{}
 
-type HttpMethod string
-type HttpTarget string
+type Method string
+type Target string
 
 const (
-	HTTP_GET  HttpMethod = "GET"
-	HTTP_POST HttpMethod = "POST"
+	GET  Method = "GET"
+	POST Method = "POST"
 )
 
 type httpServer struct {
@@ -23,17 +23,17 @@ type httpServer struct {
 	addr string
 }
 
-func MakeHttpServer(addr string) HttpServer {
+func MakeServer(addr string) Server {
 	return &httpServer{
 		mux:  http.NewServeMux(),
 		addr: addr,
 	}
 }
 
-func (h *httpServer) RegisterHttpHandler(methods []HttpMethod, target HttpTarget, handler HttpRequestHandler) {
+func (h *httpServer) RegisterHttpHandler(methods []Method, target Target, handler RequestHandler) {
 	h.mux.HandleFunc(string(target), func(w http.ResponseWriter, r *http.Request) {
 		for _, v := range methods {
-			if v == HttpMethod(r.Method) {
+			if v == Method(r.Method) {
 				body, err := ioutil.ReadAll(r.Body)
 				if err != nil {
 					logger.Error(err)

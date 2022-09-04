@@ -2,12 +2,12 @@ package handler
 
 import (
 	"networkmonitor/core/logger"
-	"networkmonitor/core/net/transport"
+	"networkmonitor/core/net/http"
 	"networkmonitor/core/parser"
 	"networkmonitor/pingengine"
 )
 
-var _ transport.HttpRequestHandler = registerHandler{}
+var _ http.RequestHandler = registerHandler{}
 
 type registerProtocol struct {
 	Addr string `json:"IpAddress"`
@@ -18,7 +18,7 @@ type registerHandler struct {
 	parser     parser.Parser
 }
 
-func MakeRegisterHandler(pingEngine pingengine.Engine, parser parser.Parser) transport.HttpRequestHandler {
+func MakeRegisterHandler(pingEngine pingengine.Engine, parser parser.Parser) http.RequestHandler {
 	return &registerHandler{
 		pingEngine: pingEngine,
 		parser:     parser,

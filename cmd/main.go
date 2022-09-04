@@ -32,7 +32,7 @@ func main() {
 	handlerBuilder := handler.MakeHandlerBuilder(pingEngine, rankEngine)
 
 	app := app.MakeApp(
-		builder.BuildHttpServer(),
+		builder.BuildServer(),
 		pingEngine,
 		rankEngine,
 		handlerBuilder)

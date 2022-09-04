@@ -3,7 +3,7 @@ package app
 import (
 	"networkmonitor/cmd/config"
 	db "networkmonitor/core/db/kv"
-	"networkmonitor/core/net/transport"
+	"networkmonitor/core/net/http"
 	"networkmonitor/core/parser"
 	"networkmonitor/core/timer"
 	"networkmonitor/pingengine"
@@ -13,7 +13,7 @@ import (
 var _ Builder = &builder{}
 
 type Builder interface {
-	BuildHttpServer() transport.HttpServer
+	BuildServer() http.Server
 	BuildPingEngine() pingengine.Engine
 	BuildRankEngine() rankengine.Engine
 }
@@ -34,8 +34,8 @@ func MakeBuilder(serverAddr string, db db.KvDb, timer timer.Timer, config config
 	}
 }
 
-func (b builder) BuildHttpServer() transport.HttpServer {
-	return transport.MakeHttpServer(b.serverAddr)
+func (b builder) BuildServer() http.Server {
+	return http.MakeServer(b.serverAddr)
 }
 
 func (b builder) BuildPingEngine() pingengine.Engine {

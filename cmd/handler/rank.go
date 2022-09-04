@@ -2,19 +2,19 @@ package handler
 
 import (
 	"networkmonitor/core/logger"
-	"networkmonitor/core/net/transport"
+	"networkmonitor/core/net/http"
 	"networkmonitor/core/parser"
 	"networkmonitor/rankengine"
 )
 
-var _ transport.HttpRequestHandler = &rankHandler{}
+var _ http.RequestHandler = &rankHandler{}
 
 type rankHandler struct {
 	rankEngine rankengine.Engine
 	parser     parser.Encoder
 }
 
-func MakeRankHandler(rankEngine rankengine.Engine, parser parser.Encoder) transport.HttpRequestHandler {
+func MakeRankHandler(rankEngine rankengine.Engine, parser parser.Encoder) http.RequestHandler {
 	return &rankHandler{
 		rankEngine: rankEngine,
 		parser:     parser,

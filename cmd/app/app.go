@@ -3,7 +3,7 @@ package app
 import (
 	"networkmonitor/cmd/handler"
 	"networkmonitor/core/logger"
-	"networkmonitor/core/net/transport"
+	"networkmonitor/core/net/http"
 	"networkmonitor/pingengine"
 	"networkmonitor/rankengine"
 )
@@ -13,14 +13,14 @@ type App interface {
 }
 
 type app struct {
-	server         transport.HttpServer
+	server         http.Server
 	pingEngine     pingengine.Engine
 	rankEngine     rankengine.Engine
 	handlerBuilder handler.HandlerBuilder
 }
 
 func MakeApp(
-	server transport.HttpServer,
+	server http.Server,
 	pingEngine pingengine.Engine,
 	rankEngine rankengine.Engine,
 	handlerBuilder handler.HandlerBuilder,
@@ -35,12 +35,12 @@ func MakeApp(
 
 func (a *app) Run() {
 	a.server.RegisterHttpHandler(
-		[]transport.HttpMethod{transport.HTTP_GET, transport.HTTP_POST},
+		[]http.Method{http.GET, http.POST},
 		"/register",
 		a.handlerBuilder.BuildRegisterHandler())
 
 	a.server.RegisterHttpHandler(
-		[]transport.HttpMethod{transport.HTTP_GET, transport.HTTP_POST},
+		[]http.Method{http.GET, http.POST},
 		"/rank/networkspeed",
 		a.handlerBuilder.BuildRankHandler())
 
