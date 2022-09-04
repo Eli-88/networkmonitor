@@ -57,6 +57,14 @@ func (p *pingEngine) RegisterIpAddress(ipAddress string) bool {
 }
 
 func (p *pingEngine) OnPingResultHandle(result pinger.Stats) {
+	// TODO: seperate to different timer to clean up the map, as of now this is ok
+	for key, handler := range p.pingTimerHandlerMap.Items() {
+		if !handler.IsAlive().Get() {
+			logger.Debug("ip removed from mapping", key)
+			p.pingTimerHandlerMap.Remove(key)
+		}
+	}
+
 	logger.Trace()
 	for _, handler := range p.pingResultHandlers {
 		handler.OnPingResultHandle(result)
