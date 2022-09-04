@@ -87,6 +87,20 @@ func (b *badgerDb) SetKvKeyValue(key []byte, value []byte) error {
 	return err
 }
 
+func (b *badgerDb) UpdateKvExistingValue(key []byte, value []byte) error {
+	return b.db.Update(func(txn *badger.Txn) error {
+		item, err := txn.Get(key)
+		if err != nil {
+			// key is not found, not consider as error as this is an expected behavior for update
+			return nil
+		}
+		if item.IsDeletedOrExpired() {
+			return nil
+		}
+		return txn.Set(key, value)
+	})
+}
+
 func (b *badgerDb) Close() {
 	b.db.Close()
 }

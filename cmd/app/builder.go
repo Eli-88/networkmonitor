@@ -6,6 +6,7 @@ import (
 	pingengine "networkmonitor/engine/ping"
 	rankengine "networkmonitor/engine/rank"
 	"networkmonitor/net/http"
+	"networkmonitor/net/pinger"
 	"networkmonitor/parser"
 	"networkmonitor/timer"
 )
@@ -35,16 +36,22 @@ func (b builder) BuildServer() http.Server {
 }
 
 func (b builder) BuildPingEngine() pingengine.Engine {
-	handler := pingengine.MakePingResultHandler(b.db, parser.MakeJsonParser())
-	timerFactory := pingengine.MakePingTimerHandlerFactory()
+	pingTimerHandler := pingengine.MakePingTimerHandler(
+		pingengine.MakePingResultHandler(
+			b.db,
+			parser.MakeJsonParser()),
+		pinger.MakePinger(),
+		b.db,
+		b.config.PingEnginePingCount(),
+	)
 	return pingengine.MakePingEngine(
-		[]pingengine.PingResultHandler{handler},
-		timerFactory,
+		pingTimerHandler,
 		timer.MakeTimer(),
 		b.config.PingEnginePingInterval(),
 		b.config.PingEnginePingCount(),
 		b.db,
-		b.config.PingEngineMaxPingAllowed())
+		b.config.PingEngineMaxPingAllowed(),
+		parser.MakeJsonParser())
 }
 
 func (b builder) BuildRankEngine() rankengine.Engine {

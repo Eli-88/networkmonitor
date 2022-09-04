@@ -34,9 +34,7 @@ func (r registerHandler) OnHttpRequest(body []byte) (string, error) {
 		return "", err
 	}
 
-	if r.pingEngine.RegisterIpAddress(msg.Addr) {
-		return "Ok", nil
-	} else {
-		return "Already Exists", nil
-	}
+	r.pingEngine.RegisterIpAddress(msg.Addr)
+	return "Ok", nil
+
 }

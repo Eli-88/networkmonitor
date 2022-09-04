@@ -24,6 +24,6 @@ To get based all registered ip addresses ranked in speed order
 ![Alt text](images/network_monitor_design.jpeg?raw=true "Network Monitor Design")
 There are 2 main engines running within the server, Ping engine and Rank engine. 
 
-The Ping engine is responsible for periodically pinging the registered ip addresses and storing the ping response stats into the databases. 
+The Ping engine is responsible for periodically pinging the registered ip addresses and storing the ping response stats into the databases. All registering ip addresses may only be registered upon successful ping
 
 The Rank engine is responsible for periodically pulling the ping stats from the database to compute and rank the ip addresses based on their rate of response, which will be atomically stored into the memory once results are generated.
