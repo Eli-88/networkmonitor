@@ -17,7 +17,6 @@ func MakePingTimerHandler(pingResultHandler PingResultHandler, pinger pinger.Pin
 		pinger:        pinger,
 		db:            db,
 		pingCount:     pingCount,
-		isAlive:       timer.MakeIsAlive(true),
 	}
 }
 
@@ -27,7 +26,6 @@ type pingHandler struct {
 	pinger        pinger.Pinger
 	db            db.KvDb
 	pingCount     int
-	isAlive       timer.IsAlive
 }
 
 func (p *pingHandler) OnTimeout() {
@@ -42,17 +40,4 @@ func (p *pingHandler) OnTimeout() {
 		}()
 		return true
 	})
-}
-
-func (p *pingHandler) Done() <-chan bool {
-	return p.done
-}
-
-func (p *pingHandler) Cancel() {
-	p.done <- true
-	p.isAlive.Set(false)
-}
-
-func (p pingHandler) IsAlive() timer.IsAlive {
-	return p.isAlive
 }

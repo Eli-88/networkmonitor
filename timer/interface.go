@@ -7,13 +7,15 @@ type IsAlive interface {
 
 type TimerHandler interface {
 	OnTimeout()
-	Done() <-chan bool
+}
+
+type TimerControl interface {
 	Cancel()
-	IsAlive() IsAlive
+	IsAlive() bool
 }
 
 type Delay int64
 
 type Timer interface {
-	DispatchTimerHandler(TimerHandler, Delay)
+	DispatchTimerHandler(TimerHandler, Delay) TimerControl
 }
