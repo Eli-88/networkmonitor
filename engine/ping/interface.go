@@ -1,6 +1,7 @@
 package pingengine
 
 import (
+	db "networkmonitor/db/kv"
 	"networkmonitor/net/pinger"
 	"networkmonitor/timer"
 )
@@ -10,10 +11,10 @@ type PingResultHandler interface {
 }
 
 type PingTimerHandlerFactory interface {
-	CreatePingTimerHandler(pingResultHandler PingResultHandler, ipaddress string, pingCount int) timer.TimerHandler
+	CreatePingTimerHandler(pingResultHandler PingResultHandler, db db.KvDb, pingCount int) timer.TimerHandler
 }
 
 type Engine interface {
-	RegisterIpAddress(ipAddress string) bool
+	RegisterIpAddress(ipAddress string)
 	Run() error
 }

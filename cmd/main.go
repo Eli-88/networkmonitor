@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	logger.SetLogLevel(logger.DEBUG)
 	if len(os.Args) < 2 {
 		logger.Fatal("need at least 1 arguement for config path. sample usage: go run cmd/main.go <config path>")
 	}

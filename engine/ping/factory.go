@@ -1,6 +1,7 @@
 package pingengine
 
 import (
+	db "networkmonitor/db/kv"
 	"networkmonitor/net/pinger"
 	"networkmonitor/timer"
 )
@@ -14,6 +15,6 @@ func MakePingTimerHandlerFactory() PingTimerHandlerFactory {
 
 type pingTimerHandlerFactory struct{}
 
-func (p *pingTimerHandlerFactory) CreatePingTimerHandler(pingResultHandler PingResultHandler, ipaddress string, pingCount int) timer.TimerHandler {
-	return MakePingTimerHandler(pingResultHandler, pinger.MakePinger(), ipaddress, pingCount)
+func (p *pingTimerHandlerFactory) CreatePingTimerHandler(pingResultHandler PingResultHandler, db db.KvDb, pingCount int) timer.TimerHandler {
+	return MakePingTimerHandler(pingResultHandler, pinger.MakePinger(), db, pingCount)
 }

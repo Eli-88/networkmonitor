@@ -35,8 +35,16 @@ func (r *resultHandler) OnPingResultHandle(result pinger.Stats) {
 	})
 
 	if err != nil {
-		logger.Error(err)
-		return
+		goto FAIL
 	}
-	r.kv.SetKvKeyValue([]byte(key), response) // TODO: better format for value
+
+	err = r.kv.UpdateKvExistingValue([]byte(key), response)
+	if err != nil {
+		goto FAIL
+	}
+
+	return
+FAIL:
+	logger.Error(err)
+
 }
