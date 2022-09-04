@@ -1,6 +1,7 @@
 package timer
 
 import (
+	"networkmonitor/logger"
 	"sync/atomic"
 	"time"
 )
@@ -40,7 +41,7 @@ func (t timerImpl) DispatchTimerHandler(handler TimerHandler, delayInMillisecond
 			case <-control.Done():
 				return
 			case <-ticker.C:
-				handler.OnTimeout()
+				control.OnTimeout()
 			}
 		}
 	}()
@@ -58,4 +59,9 @@ func (t *timerControl) Cancel() {
 
 func (t timerControl) IsAlive() bool {
 	return t.isAlive.Load().(bool)
+}
+
+func (t timerControl) OnTimeout() {
+	logger.Debug("timeout triggered on handler[", &t.handler, "]")
+	t.handler.OnTimeout()
 }
