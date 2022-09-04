@@ -7,42 +7,55 @@ import (
 
 // interface compliance
 var _ Timer = &timerImpl{}
+var _ TimerControl = &timerControl{}
 
 type timerImpl struct{}
 
-type isAlive struct {
-	flag atomic.Value
+type timerControl struct {
+	handler TimerHandler
+	done    chan bool
+	isAlive atomic.Value
 }
 
 func MakeTimer() Timer {
 	return &timerImpl{}
 }
 
-func (t timerImpl) DispatchTimerHandler(handler TimerHandler, delayInMilliseconds Delay) {
+func makeTimerControl(handler TimerHandler) *timerControl {
+	t := &timerControl{
+		handler: handler,
+		done:    make(chan bool, 1),
+	}
+	t.isAlive.Store(true)
+	return t
+}
+
+func (t timerImpl) DispatchTimerHandler(handler TimerHandler, delayInMilliseconds Delay) TimerControl {
 	ticker := time.NewTicker(time.Duration(delayInMilliseconds) * time.Millisecond)
 
+	control := makeTimerControl(handler)
 	go func() {
 		for {
 			select {
-			case <-handler.Done():
+			case <-control.Done():
 				return
 			case <-ticker.C:
 				handler.OnTimeout()
 			}
 		}
 	}()
+	return control
 }
 
-func (i *isAlive) Set(flag bool) {
-	i.flag.Store(flag)
+func (t timerControl) Done() <-chan bool {
+	return t.done
 }
 
-func (i *isAlive) Get() bool {
-	return i.flag.Load().(bool)
+func (t *timerControl) Cancel() {
+	t.done <- true
+	t.isAlive.Store(false)
 }
 
-func MakeIsAlive(flag bool) IsAlive {
-	a := &isAlive{}
-	a.flag.Store(flag)
-	return a
+func (t timerControl) IsAlive() bool {
+	return t.isAlive.Load().(bool)
 }
