@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"networkmonitor/core/net/transport"
+	"networkmonitor/core/net/http"
 	"networkmonitor/core/parser"
 	"networkmonitor/pingengine"
 	"networkmonitor/rankengine"
@@ -11,8 +11,8 @@ import (
 var _ HandlerBuilder = handlerBuilder{}
 
 type HandlerBuilder interface {
-	BuildRegisterHandler() transport.HttpRequestHandler
-	BuildRankHandler() transport.HttpRequestHandler
+	BuildRegisterHandler() http.RequestHandler
+	BuildRankHandler() http.RequestHandler
 }
 
 func MakeHandlerBuilder(pingEngine pingengine.Engine, rankEngine rankengine.Engine) HandlerBuilder {
@@ -27,10 +27,10 @@ type handlerBuilder struct {
 	rankEngine rankengine.Engine
 }
 
-func (h handlerBuilder) BuildRegisterHandler() transport.HttpRequestHandler {
+func (h handlerBuilder) BuildRegisterHandler() http.RequestHandler {
 	return MakeRegisterHandler(h.pingEngine, parser.MakeJsonParser())
 }
 
-func (h handlerBuilder) BuildRankHandler() transport.HttpRequestHandler {
+func (h handlerBuilder) BuildRankHandler() http.RequestHandler {
 	return MakeRankHandler(h.rankEngine, parser.MakeJsonParser())
 }
