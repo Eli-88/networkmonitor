@@ -1,10 +1,5 @@
 package timer
 
-type IsAlive interface {
-	Set(bool)
-	Get() bool
-}
-
 type TimerHandler interface {
 	OnTimeout()
 }
