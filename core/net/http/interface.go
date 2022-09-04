@@ -6,5 +6,5 @@ type RequestHandler interface {
 
 type Server interface {
 	RegisterHttpHandler([]Method, Target, RequestHandler)
-	Run()
+	Run() error
 }
