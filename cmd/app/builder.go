@@ -1,6 +1,7 @@
 package app
 
 import (
+	"networkmonitor/cmd/config"
 	db "networkmonitor/core/db/kv"
 	"networkmonitor/core/net/transport"
 	"networkmonitor/core/parser"
@@ -21,13 +22,15 @@ type builder struct {
 	serverAddr string
 	db         db.KvDb
 	timer      timer.Timer
+	config     config.Config
 }
 
-func MakeBuilder(serverAddr string, db db.KvDb, timer timer.Timer) Builder {
+func MakeBuilder(serverAddr string, db db.KvDb, timer timer.Timer, config config.Config) Builder {
 	return &builder{
 		serverAddr: serverAddr,
 		db:         db,
 		timer:      timer,
+		config:     config,
 	}
 }
 
@@ -38,9 +41,19 @@ func (b builder) BuildHttpServer() transport.HttpServer {
 func (b builder) BuildPingEngine() pingengine.Engine {
 	handler := pingengine.MakePingResultHandler(b.db, parser.MakeJsonParser())
 	timerFactory := pingengine.MakePingTimerHandlerFactory()
-	return pingengine.MakePingEngine([]pingengine.PingResultHandler{handler}, timerFactory, b.timer, 5000, 10, b.db, 1000)
+	return pingengine.MakePingEngine(
+		[]pingengine.PingResultHandler{handler},
+		timerFactory, b.timer,
+		b.config.PingEnginePingInterval(),
+		b.config.PingEnginePingCount(),
+		b.db,
+		b.config.PingEngineMaxPingAllowed())
 }
 
 func (b builder) BuildRankEngine() rankengine.Engine {
-	return rankengine.MakeRankEngine(1000, b.db, b.timer, parser.MakeJsonParser())
+	return rankengine.MakeRankEngine(
+		b.config.RankEngineMaxEntryAllowed(),
+		b.db,
+		b.timer,
+		parser.MakeJsonParser())
 }

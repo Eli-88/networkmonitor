@@ -1,0 +1,17 @@
+{
+    "Db": {
+      "Path": "tmp/badger"
+    },
+    "PingEngine": {
+      "PingInterval": 3000,
+      "PingCount": 10,
+      "MaxPingAllowed": 1000
+    },
+    "RankEngine": {
+      "MaxEntryAllowed": 10000
+    },
+    "Server": {
+      "Host": "127.0.0.1",
+      "Port": 5050
+    }
+  }
