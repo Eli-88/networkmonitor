@@ -19,23 +19,19 @@ type Builder interface {
 }
 
 type builder struct {
-	serverAddr string
-	db         db.KvDb
-	timer      timer.Timer
-	config     config.Config
+	db     db.KvDb
+	config config.Config
 }
 
-func MakeBuilder(serverAddr string, db db.KvDb, timer timer.Timer, config config.Config) Builder {
+func MakeBuilder(db db.KvDb, config config.Config) Builder {
 	return &builder{
-		serverAddr: serverAddr,
-		db:         db,
-		timer:      timer,
-		config:     config,
+		db:     db,
+		config: config,
 	}
 }
 
 func (b builder) BuildServer() http.Server {
-	return http.MakeServer(b.serverAddr)
+	return http.MakeServer(b.config.ServerIpAddr())
 }
 
 func (b builder) BuildPingEngine() pingengine.Engine {
@@ -43,7 +39,8 @@ func (b builder) BuildPingEngine() pingengine.Engine {
 	timerFactory := pingengine.MakePingTimerHandlerFactory()
 	return pingengine.MakePingEngine(
 		[]pingengine.PingResultHandler{handler},
-		timerFactory, b.timer,
+		timerFactory,
+		timer.MakeTimer(),
 		b.config.PingEnginePingInterval(),
 		b.config.PingEnginePingCount(),
 		b.db,
@@ -54,6 +51,6 @@ func (b builder) BuildRankEngine() rankengine.Engine {
 	return rankengine.MakeRankEngine(
 		b.config.RankEngineMaxEntryAllowed(),
 		b.db,
-		b.timer,
+		timer.MakeTimer(),
 		parser.MakeJsonParser())
 }

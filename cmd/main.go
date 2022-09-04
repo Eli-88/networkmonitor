@@ -6,7 +6,6 @@ import (
 	"networkmonitor/cmd/handler"
 	db "networkmonitor/core/db/kv"
 	"networkmonitor/core/logger"
-	"networkmonitor/core/timer"
 	"os"
 )
 
@@ -26,7 +25,7 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-	builder := app.MakeBuilder(config.ServerIpAddr(), db, timer.MakeTimer(), config)
+	builder := app.MakeBuilder(db, config)
 	pingEngine := builder.BuildPingEngine()
 	rankEngine := builder.BuildRankEngine()
 	handlerBuilder := handler.MakeHandlerBuilder(pingEngine, rankEngine)
