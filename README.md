@@ -21,7 +21,7 @@ To get based all registered ip addresses ranked in speed order
 - sample response body: `[{"Addr":"www.youtube.com","AverageRtt":11},{"Addr":"www.google.com","AverageRtt":20},{"Addr":"cn.indeed.com","AverageRtt":20}]`
 
 ## Design
-![Alt text](images/network_monitor_design.jpeg?raw=true "Network Monitor Design")
+![Alt text](images/network_monitor_design_2.jpeg?raw=true "Network Monitor Design")
 There are 2 main engines running within the server, Ping engine and Rank engine. 
 
 The Ping engine is responsible for periodically pinging the registered ip addresses and storing the ping response stats into the databases. All registering ip addresses may only be registered upon successful ping
