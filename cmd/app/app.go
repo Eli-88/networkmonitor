@@ -50,5 +50,9 @@ func (a *app) Run() {
 	}
 
 	a.rankEngine.Run()
-	a.server.Run()
+
+	err = a.server.Run()
+	if err != nil {
+		logger.Fatal(err)
+	}
 }

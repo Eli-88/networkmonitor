@@ -55,6 +55,6 @@ func (h *httpServer) RegisterHttpHandler(methods []Method, target Target, handle
 	})
 }
 
-func (h *httpServer) Run() {
-	http.ListenAndServe(h.addr, h.mux)
+func (h *httpServer) Run() error {
+	return http.ListenAndServe(h.addr, h.mux)
 }
