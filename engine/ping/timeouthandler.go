@@ -1,9 +1,9 @@
 package pingengine
 
 import (
-	"networkmonitor/core/logger"
-	"networkmonitor/core/net/pinger"
-	"networkmonitor/core/timer"
+	"networkmonitor/logger"
+	"networkmonitor/net/pinger"
+	"networkmonitor/timer"
 )
 
 // interface compliance

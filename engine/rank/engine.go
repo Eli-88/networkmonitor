@@ -2,11 +2,11 @@ package rankengine
 
 import (
 	"container/heap"
-	db "networkmonitor/core/db/kv"
-	"networkmonitor/core/logger"
-	"networkmonitor/core/parser"
-	"networkmonitor/core/timer"
-	"networkmonitor/pingengine"
+	db "networkmonitor/db/kv"
+	pingengine "networkmonitor/engine/ping"
+	"networkmonitor/logger"
+	"networkmonitor/parser"
+	"networkmonitor/timer"
 	"sort"
 	"sync/atomic"
 )

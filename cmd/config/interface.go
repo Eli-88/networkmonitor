@@ -1,6 +1,6 @@
 package config
 
-import "networkmonitor/core/timer"
+import "networkmonitor/timer"
 
 type Config interface {
 	PingEnginePingInterval() timer.Delay

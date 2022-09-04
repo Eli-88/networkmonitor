@@ -1,8 +1,8 @@
 package pingengine
 
 import (
-	"networkmonitor/core/net/pinger"
-	"networkmonitor/core/timer"
+	"networkmonitor/net/pinger"
+	"networkmonitor/timer"
 )
 
 type PingResultHandler interface {

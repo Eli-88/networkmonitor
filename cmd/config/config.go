@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
-	"networkmonitor/core/parser"
-	"networkmonitor/core/timer"
+	"networkmonitor/parser"
+	"networkmonitor/timer"
 )
 
 var _ Config = &allConfig{}

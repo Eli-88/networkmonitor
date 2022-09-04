@@ -1,10 +1,10 @@
 package pingengine
 
 import (
-	db "networkmonitor/core/db/kv"
-	"networkmonitor/core/logger"
-	"networkmonitor/core/net/pinger"
-	"networkmonitor/core/timer"
+	db "networkmonitor/db/kv"
+	"networkmonitor/logger"
+	"networkmonitor/net/pinger"
+	"networkmonitor/timer"
 
 	cmap "github.com/orcaman/concurrent-map/v2"
 )
