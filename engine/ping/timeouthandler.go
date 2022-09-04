@@ -16,7 +16,7 @@ func MakePingTimerHandler(pingResultHandler PingResultHandler, pinger pinger.Pin
 		pinger:        pinger,
 		ipAddress:     ipaddress,
 		pingCount:     pingCount,
-		isAlive:       true,
+		isAlive:       timer.MakeIsAlive(true),
 	}
 }
 
@@ -26,7 +26,7 @@ type pingHandler struct {
 	pinger        pinger.Pinger
 	ipAddress     string
 	pingCount     int
-	isAlive       bool
+	isAlive       timer.IsAlive
 }
 
 func (p *pingHandler) OnTimeout() {
@@ -45,9 +45,9 @@ func (p *pingHandler) Done() <-chan bool {
 
 func (p *pingHandler) Cancel() {
 	p.done <- true
-	p.isAlive = false
+	p.isAlive.Set(false)
 }
 
-func (p pingHandler) IsAlive() bool {
+func (p pingHandler) IsAlive() timer.IsAlive {
 	return p.isAlive
 }
